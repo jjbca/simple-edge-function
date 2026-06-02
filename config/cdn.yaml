@@ -4,14 +4,13 @@ data:
   originSelectors:
     rules:
       - name: route-to-first-edge-function
-        when: { reqProperty: path, equals: "/weather" }
+        when: 
+          allOf:
+            - reqProperty: path 
+              equals: "/blog/first-post"
+            - reqProperty: domain
+              like: "main--eds-aem--jjbca"      
         action:
           type: selectAemOrigin
-          originName: edgefunction-first-edge-function
-          skipCache: true
-      - name: route-to-second-edge-function
-        when: { reqProperty: path, equals: "/hello-world" }
-        action:
-          type: selectAemOrigin
-          originName: edgefunction-second-edge-function
+          originName: edgefunction-location-flag
           skipCache: true
