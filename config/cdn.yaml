@@ -10,7 +10,7 @@ data:
             - reqProperty: domain
               equals: eds.labulle.in
             - reqProperty: path
-              matches: "^/blog/.*"
+              equals: "/hello-world"
         action:
           type: selectAemOrigin
           originName: edgefunction-location-flag
@@ -27,5 +27,5 @@ data:
 
     origins:
       - name: eds-origin
-        domain: main--eds-aem--jjbca.aem.live
+        domain: eds.labulle.in
         forwardHost: false
