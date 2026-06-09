@@ -3,14 +3,29 @@ version: '1'
 data:
   originSelectors:
     rules:
-      - name: route-to-first-edge-function
-        when: 
+      # Route /blog/* to your edge function
+      - name: route-blog-to-edge-function
+        when:
           allOf:
-            - reqProperty: path 
-              equals: "/blog/first-post"
             - reqProperty: domain
-              like: "main--eds-aem--jjbca"      
+              equals: eds.labulle.in
+            - reqProperty: path
+              matches: "^/blog/.*"
         action:
           type: selectAemOrigin
           originName: edgefunction-location-flag
           skipCache: true
+
+      # Everything else → EDS origin
+      - name: fallback-to-eds
+        when:
+          reqProperty: domain
+          equals: eds.labulle.in
+        action:
+          type: selectOrigin
+          originName: eds-origin
+
+    origins:
+      - name: eds-origin
+        domain: main--eds-aem--jjbca.aem.live
+        forwardHost: false
