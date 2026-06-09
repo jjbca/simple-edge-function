@@ -148,3 +148,6 @@ dist
 /node_modules
 /bin
 /pkg
+
+# adc-config.
+/adc-config.json
